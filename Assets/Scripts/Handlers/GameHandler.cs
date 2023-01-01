@@ -18,6 +18,8 @@ public class GameHandler : MonoBehaviour
 
 
     [SerializeField] Canvas canvas;
+    [SerializeField] Player player;
 
     public Canvas Canvas { get => canvas; }
+    public Player Player { get => player; }
 }

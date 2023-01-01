@@ -46,7 +46,7 @@ public class Graph<T>
         if (val1 == null || val2 == null)
             return false;
 
-        if (ver1.Neighbors.Contains(ver2))
+        if (ver1.Neighbors.Values.Contains(ver2))
             return false;
 
         ver1.AddNeighbors(ver2);
@@ -74,7 +74,7 @@ public class Graph<T>
         if (ver1 == null || ver2 == null)
             return false;
 
-        if (!ver1.Neighbors.Contains(ver2))
+        if (!ver1.Neighbors.Values.Contains(ver2))
             return false;
 
         ver1.RemoveNeighbors(ver2);

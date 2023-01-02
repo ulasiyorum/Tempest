@@ -43,7 +43,7 @@ public class Graph<T>
         Vertex<T> ver1 = Find(val1);
         Vertex<T> ver2 = Find(val2);
 
-        if (val1 == null || val2 == null)
+        if (ver1 == null || ver2 == null)
             return false;
 
         if (ver1.Neighbors.Values.Contains(ver2))

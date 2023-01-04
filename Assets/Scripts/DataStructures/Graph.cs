@@ -38,6 +38,33 @@ public class Graph<T>
         return null;
     }
 
+    public bool HasPathDFS(T source, T destination)
+    {
+        Vertex<T> from = Find(source);
+        Vertex<T> to = Find(destination);
+        HashSet<T> visited = new();
+        return HasPathDFS(from , to , visited);
+    }
+
+    private bool HasPathDFS(Vertex<T> source, Vertex<T> destination, HashSet<T> visited)
+    {
+        if (visited.Contains(source.Value))
+            return false;
+
+        visited.Add(source.Value);
+
+        if (source == destination)
+            return true;
+    
+        foreach(Vertex<T> child in source.Neighbors.Values)
+        {
+            if (HasPathDFS(child, destination, visited))
+                return true;
+        }
+
+        return false;
+    }
+
     public bool AddEdge(T val1, T val2)
     {
         Vertex<T> ver1 = Find(val1);

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static Unity.VisualScripting.Member;
 
 public class MapAlgorithm : MonoBehaviour
 {
     private void Update()
     {
-        if (!IsInCurrentMap())
-        {
-            ChangeMap();
-        }
+        
     }
-    
+
     private static bool IsInCurrentMap()
     {
         return IsInMap(current,GameHandler.Instance.Player.transform.position);
@@ -48,7 +47,6 @@ public class MapAlgorithm : MonoBehaviour
                     y += rectScale.y;
                 }
             }
-
             return positions;
         }
     }
@@ -71,6 +69,9 @@ public class MapAlgorithm : MonoBehaviour
 
     public static void CreateMap()
     {
+        if (IsInCurrentMap())
+            return;
+
         int random = UnityEngine.Random.Range(0, MapPrefabs.Length);
         float closestDistance = float.MaxValue;
         int closestDistanceIndex = -1;
@@ -86,6 +87,7 @@ public class MapAlgorithm : MonoBehaviour
         }
 
         Vector2 generatedMapPosition = mapSpawnPositions[closestDistanceIndex];
+        Debug.Log(generatedMapPosition);
 
         GameObject generatedMap = Instantiate(MapPrefabs[random], GameHandler.Instance.Canvas.transform, false);
         generatedMap.transform.position = generatedMapPosition;
@@ -95,7 +97,7 @@ public class MapAlgorithm : MonoBehaviour
         current = generatedMap.GetComponent<Map>();
     }
 
-    public async static void ChangeMap()
+    public static void ChangeMap()
     {
         Map x = MapExists(GameHandler.Instance.Player.transform.position);
         Debug.Log(x == null);
@@ -103,41 +105,32 @@ public class MapAlgorithm : MonoBehaviour
             current = x;
         else
             CreateMap();
-        await Task.Delay(500);
     }
 
     public static Map MapExists(Vector2 position)
     {
-        List<Vertex<Map>> ignoreList = new List<Vertex<Map>>();
+        HashSet<Map> visited = new();
 
-        foreach (Vertex<Map> vertex in current.ConnectedMaps.Vertices)
-        {
-            if (IsInMap(vertex.Value, position))
-                return vertex.Value;
-
-            ignoreList.Add(vertex);
-
-            if (ignoreList.Contains(vertex))
-                return MapExists(vertex, position, ignoreList);
-        }
-
-
-        return null;
+        return MapExists(position, current, visited);
     }
 
-    private static Map MapExists(Vertex<Map> vertex, Vector2 mapLocation, List<Vertex<Map>> ignoreList)
+    private static Map MapExists(Vector2 position, Map current, HashSet<Map> visited)
     {
-        foreach (var ver in vertex.Neighbors.Values)
+        if (visited.Contains(current))
+            return null;
+
+        if (IsInMap(current,position))
+            return current;
+
+        visited.Add(current);
+
+        foreach(Vertex<Map> vertex in current.ConnectedMaps.Vertices)
         {
-            if (IsInMap(vertex.Value, mapLocation))
-                return ver.Value;
-
-            ignoreList.Add(vertex);
-
-            if (!ignoreList.Contains(vertex))
-                return MapExists(vertex, mapLocation, ignoreList);
+            if (MapExists(position, vertex.Value, visited) != null)
+                return vertex.Value;
         }
 
         return null;
     }
+
 }

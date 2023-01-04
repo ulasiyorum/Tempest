@@ -29,4 +29,8 @@ public class Map : MonoBehaviour
         ConnectedMaps.AddVertex(connect);
         ConnectedMaps.AddEdge(connect, this);
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        MapAlgorithm.ChangeMap();
+    }
 }

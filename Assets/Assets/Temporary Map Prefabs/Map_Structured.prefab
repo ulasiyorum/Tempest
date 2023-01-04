@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 7449826827751894675}
   - component: {fileID: 3958128491704052130}
   - component: {fileID: 2733421815152407712}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Map_Structured
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ Transform:
   m_GameObject: {fileID: 2503220490816810436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.000011444, y: 0.0000095367, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6.4, y: 6.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1482963259114065726}

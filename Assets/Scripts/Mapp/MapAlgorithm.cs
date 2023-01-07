@@ -27,29 +27,43 @@ public class MapAlgorithm : MonoBehaviour
     }
     private static Map root;
     private static Map current;
-    private static Vector2[] mapSpawnPositions
+    private static Vector2 NextMapPosition()
     {
-        get
-        {
-            Vector2 position = current.transform.position;
-            Vector2 rectScale = GetRect();
-            Vector2[] positions = new Vector2[9];
-            float x = -1 * rectScale.x;
-            float y = -1 * rectScale.y;
+        Vector2 position = current.transform.position;
+        Vector2 rectScale = GetRect();
+        Vector2[] positions = new Vector2[8];
+        float x = -1 * rectScale.x;
+        float y = -1 * rectScale.y;
 
-            for(int i = 0; i < positions.Length; i++)
+        for (int i = 0; i < positions.Length; i++)
+        {
+            x = i == 4 ? x + rectScale.x : x;
+            positions[i] = new Vector2(position.x + x, position.y + y);
+            x += rectScale.x;
+            if ((i + 1) % 3 == 0)
             {
-                positions[i] = new Vector2(position.x + x , position.y + y);
-                x += rectScale.x;
-                if((i + 1) % 3 == 0)
-                {
-                    x = -1 * rectScale.x;
-                    y += rectScale.y;
-                }
+                x = -1 * rectScale.x;
+                y += rectScale.y;
             }
-            return positions;
         }
+
+        float closestDistance = float.MaxValue;
+        int closestDistanceIndex = 0;
+        Vector2 playerPos = GameHandler.Instance.Player.transform.position;
+
+        for (int i = 0; i < positions.Length; i++)
+        {
+            if (closestDistance > Vector2.Distance(positions[i], playerPos))
+            {
+                closestDistance = Vector2.Distance(positions[i], playerPos);
+                closestDistanceIndex = i;
+            }
+        }
+
+        return positions[closestDistanceIndex];
     }
+
+
 
     private static Vector2 GetRect()
     {
@@ -73,26 +87,14 @@ public class MapAlgorithm : MonoBehaviour
             return;
 
         int random = UnityEngine.Random.Range(0, MapPrefabs.Length);
-        float closestDistance = float.MaxValue;
-        int closestDistanceIndex = -1;
-        Vector2 playerPosition = GameHandler.Instance.Player.transform.position;
-
-        for (int i = 0; i < mapSpawnPositions.Length; i++)
-        {
-            if (closestDistance > Vector2.Distance(playerPosition, mapSpawnPositions[i]))
-            {
-                closestDistance = Vector2.Distance(playerPosition, mapSpawnPositions[i]);
-                closestDistanceIndex = i;
-            }
-        }
-
-        Vector2 generatedMapPosition = mapSpawnPositions[closestDistanceIndex];
-        Debug.Log(generatedMapPosition);
 
         GameObject generatedMap = Instantiate(MapPrefabs[random], GameHandler.Instance.Canvas.transform, false);
-        generatedMap.transform.position = generatedMapPosition;
 
         generatedMap.GetComponent<Map>().Connect(current);
+
+        current = generatedMap.GetComponent<Map>();
+
+        generatedMap.transform.position = NextMapPosition();
 
         current = generatedMap.GetComponent<Map>();
     }

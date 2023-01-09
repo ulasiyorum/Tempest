@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Vertex<T>
+public class Vertex<T> : IComparable
 {
     private T value;
     private Dictionary<int, Vertex<T>> neighbors;
+
+    public int distance;
+    public LinkedList<Vertex<T>> shortestPath;
 
     public Vertex(T value)
     {
@@ -66,5 +70,9 @@ public class Vertex<T>
         return vertexString.ToString();
     }
 
-
+    public int CompareTo(object other)
+    {
+        Vertex<T> obj = other as Vertex<T>;
+        return distance.CompareTo(obj.distance);
+    }
 }

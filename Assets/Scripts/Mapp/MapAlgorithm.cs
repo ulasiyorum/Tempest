@@ -27,9 +27,9 @@ public class MapAlgorithm : MonoBehaviour
     }
     private static Map root;
     private static Map current;
-    private static Vector2 NextMapPosition()
+    private static Vector2 NextMapPosition(Vector2 position)
     {
-        Vector2 position = current.transform.position;
+
         Vector2 rectScale = GetRect();
         Vector2[] positions = new Vector2[8];
         float x = -1 * rectScale.x;
@@ -92,9 +92,11 @@ public class MapAlgorithm : MonoBehaviour
 
         generatedMap.GetComponent<Map>().Connect(current);
 
+        Vector2 currentPosition = current.transform.position;
+
         current = generatedMap.GetComponent<Map>();
 
-        generatedMap.transform.position = NextMapPosition();
+        generatedMap.transform.position = NextMapPosition(currentPosition);
 
         current = generatedMap.GetComponent<Map>();
     }

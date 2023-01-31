@@ -65,7 +65,7 @@ public class MapAlgorithm : MonoBehaviour
 
 
 
-    private static Vector2 GetRect()
+    public static Vector2 GetRect()
     {
         Bounds bounds = current.GetComponent<BoxCollider2D>().bounds;
         float x = Mathf.Abs(bounds.size.x - current.transform.position.x);

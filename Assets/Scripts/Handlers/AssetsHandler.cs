@@ -16,7 +16,11 @@ public class AssetsHandler : MonoBehaviour
         }
     }
 
-    [SerializeField] GameObject[] mapPrefabs;
 
+    [SerializeField] GameObject[] mapPrefabs;
+    [SerializeField] Sprite[] collectableAssets;
+
+    public GameObject collectablePrefab;
     public GameObject[] MapPrefabs { get => mapPrefabs; }
+    public Sprite[] CollectableAssets { get => collectableAssets; }
 }

@@ -458,6 +458,13 @@ MonoBehaviour:
   - {fileID: 2503220490816810436, guid: bd89252b86f8d9e4cbbd21dc15a68b5c, type: 3}
   - {fileID: 2503220490816810436, guid: 5bae6c0427989884d9030f8ba631b31e, type: 3}
   - {fileID: 2503220490816810436, guid: c5344f69a9fde044caac65c6972f3f3c, type: 3}
+  collectableAssets:
+  - {fileID: 21300000, guid: 0779ad3feec52124e97114bcbb12ef13, type: 3}
+  - {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
+  - {fileID: 21300000, guid: 6a7ac9e8c26b12440bf2b1da2ca97794, type: 3}
+  - {fileID: 21300000, guid: 3458c119c69e9bc4f9647599c2901dee, type: 3}
+  - {fileID: 21300000, guid: e5600378dd761e64d9423790c482bf36, type: 3}
+  collectablePrefab: {fileID: 3725331421448657886, guid: 80042bd567fad7c419b6f1b9f554c766, type: 3}
 --- !u!1 &1169707248
 GameObject:
   m_ObjectHideFlags: 0

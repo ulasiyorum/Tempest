@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+
     private int mapId; // This mapId will tell us which prefab it's used for
     private List<Collectable> collectables;
     private Graph<Map> connectedMaps;
@@ -32,5 +33,18 @@ public class Map : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         MapAlgorithm.ChangeMap();
+    }
+
+    public Vector2 GetRandomPointOnTheMap()
+    {
+        Vector2 current = transform.position;
+        Bounds b = GetComponent<BoxCollider2D>().bounds;
+        float height = b.size.y;
+        float width = b.size.x;
+
+        height -= Random.Range(0, height);
+        width -= Random.Range(0, width);
+
+        return new Vector2(current.x - width, current.y - height);
     }
 }

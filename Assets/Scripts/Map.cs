@@ -66,6 +66,7 @@ public class Map : MonoBehaviour
     public void Connect(Map connect)
     {
         ConnectedMaps.AddVertex(connect);
+        connect.ConnectedMaps.AddVertex(this);
         ConnectedMaps.AddEdge(connect, this);
     }
     private void OnTriggerExit2D(Collider2D collision)

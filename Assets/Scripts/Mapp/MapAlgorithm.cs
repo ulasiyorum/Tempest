@@ -7,6 +7,7 @@ using static Unity.VisualScripting.Member;
 
 public class MapAlgorithm : MonoBehaviour
 {
+
     private void Update()
     {
         

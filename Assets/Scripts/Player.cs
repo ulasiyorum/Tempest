@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private int direction;
+    private Animator anim;
+
+    private void Start()
+    {
+        direction = 1;
+        anim = GetComponent<Animator>();
+    }
+
+
     void Update()
     {
         HandleMovement();
@@ -11,8 +21,43 @@ public class Player : MonoBehaviour
 
     public void HandleMovement()
     {
-        float horizontal = transform.position.x + Input.GetAxis("Horizontal") * Time.deltaTime * 2.5f;
-        float vertical = transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * 2.5f;
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        float horizontal = transform.position.x + h * Time.deltaTime * 2.5f;
+        float vertical = transform.position.y + v * Time.deltaTime * 2.5f;
+
+        switch (h,v)
+        {
+            case ( > 0, > 0):
+            case ( > 0, 0):
+            case ( > 0, < 0):
+                anim.Play("Character_Move_1");
+                direction = 1;
+                break;
+            case (0, 0):
+                if (direction == 1)
+                    anim.Play("Character_Idle");
+                else
+                    anim.Play("Character_Idle_Left");
+                break;
+            case (0, > 0):
+            case (0, < 0):
+                if (direction == 1)
+                    anim.Play("Character_Move_1");
+                else
+                    anim.Play("Character_Move_2");
+                break;
+            case ( < 0, < 0):
+            case ( < 0, > 0):
+            case ( < 0, 0):
+                direction = -1;
+                anim.Play("Character_Move_2");
+                break;
+            default:
+                break;
+        }
+
 
         transform.position = new Vector2(horizontal,vertical);
     }

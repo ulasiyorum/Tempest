@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -52,6 +53,7 @@ public class Map : MonoBehaviour
 
         foreach(var c in collectables)
         {
+            //c id to be used
             GameObject col = Instantiate(AssetsHandler.Instance.collectablePrefab, GameHandler.Instance.Canvas.transform, true);
             col.AddComponent<Collectable>();
             col.GetComponent<Collectable>().Init(this);
@@ -69,8 +71,10 @@ public class Map : MonoBehaviour
         connect.ConnectedMaps.AddVertex(this);
         ConnectedMaps.AddEdge(connect, this);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    private async void OnTriggerExit2D(Collider2D collision)
     {
+        await Task.Delay(250);
         MapAlgorithm.ChangeMap();
     }
 

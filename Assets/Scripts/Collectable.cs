@@ -6,6 +6,7 @@ public class Collectable : MonoBehaviour
 {
     private int id; // To tell us what type of collectable is this
     private string collectableName;
+    private string description; // for equip
     private float x; // position on current map
     private float y; // position on current map
 
@@ -21,7 +22,16 @@ public class Collectable : MonoBehaviour
     private bool eatable; // May add or remove drinkAmount
     private bool drinkable; // Comes with bonuses
     private bool flamable;
+    private bool wearable;
 
+    // Icon
+
+    private Sprite icon;
+
+    private void Start()
+    {
+        icon = GetComponent<SpriteRenderer>().sprite;
+    }
 
     public int ID { get => id; }
     public Vector2 position { get => new Vector2(x,y); }

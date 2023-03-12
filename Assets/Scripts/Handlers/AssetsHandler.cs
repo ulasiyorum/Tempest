@@ -7,12 +7,15 @@ public class AssetsHandler : MonoBehaviour
     public static AssetsHandler i;
 
     public GameObject[] mapPrefabs;
-    public Player player;
 
+    private void Awake()
+    {
+        i = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        i = this;
+
     }
 
     // Update is called once per frame

@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
         };
         GameObject go = Instantiate(prefab, canvas.transform, true);
         go.GetComponent<Map>().CancelEdge(type);
+
+        if (type == Edge.Type.Start)
+            ChangeCurrentMap(go.GetComponent<Map>());
+
         go.transform.position = newPos;
     }
 

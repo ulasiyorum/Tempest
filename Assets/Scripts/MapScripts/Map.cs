@@ -16,8 +16,14 @@ public class Map : MonoBehaviour
 
     private void Awake()
     {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         GameManager.i.ChangeCurrentMap(this);
     }
+
 
     public void CancelEdge(Edge.Type type)
     {

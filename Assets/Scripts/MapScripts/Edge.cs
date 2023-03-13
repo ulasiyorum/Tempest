@@ -18,7 +18,7 @@ public class Edge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        alreadyCreated = false;
+        
     }
 
     // Update is called once per frame
@@ -32,7 +32,6 @@ public class Edge : MonoBehaviour
         if (other.tag != "PlayerObject")
             return;
 
-        Debug.LogWarning("trigger");
         if (alreadyCreated)
             return;
         alreadyCreated = true;

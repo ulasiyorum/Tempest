@@ -14,10 +14,27 @@ public class Map : MonoBehaviour
 
     public Edge[] edges; // 0 up 1 down 2 left 3 right
 
-    private void Awake()
+    private void Start()
     {
+        SpawnCollectables();
+    }
+
+    private void SpawnCollectables()
+    {
+        int amount = Random.Range(0,3);
+        GameObject[] prefabs = AssetsHandler.i.colPrefabs;
+        for (int i = 0; i < amount; i++)
+        {
+            int index = Random.Range(0, prefabs.Length);
+            GameObject go = Instantiate(prefabs[index],GameManager.i.canvas.transform,true);
+            float xRandom = Random.Range(transform.position.x - xSize / 2, transform.position.x + xSize / 2);
+            float yRandom = Random.Range(transform.position.y - ySize / 2, transform.position.y + ySize / 2);
+            Vector2 location = new Vector2(xRandom, yRandom);
+            go.transform.position = location;
+        }
 
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

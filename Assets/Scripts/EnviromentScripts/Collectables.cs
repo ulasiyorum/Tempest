@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Collectables : MonoBehaviour
 {
+
+    public Sprite icon;
+
     public enum Type
     {
         Food,
@@ -11,9 +15,11 @@ public class Collectables : MonoBehaviour
         Burn,
         Cloth,
         Medical,
+        Tool,
         Other
     }
-    [SerializeField] GameObject equipMenu;
+
+
 
     public string itemName;
     public Type type;
@@ -31,6 +37,9 @@ public class Collectables : MonoBehaviour
     public float itemAmount = 0;
     public float itemWeight = 0;
 
+    public float ToolAttackDamage = 0;
+    public float ToolSpeed = 0;
+
     public float sicknessChance = 0;
 
     private void Start()
@@ -46,11 +55,15 @@ public class Collectables : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        equipMenu.SetActive(false);
+        EquipMenu.instance.anim.Play("FadeOut");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        equipMenu.SetActive(true);
+        if (EquipMenu.instance.gameObject.activeInHierarchy)
+            return;
+        EquipMenu.instance.gameObject.SetActive(true);
+        EquipMenu.instance.anim.Play("FadeIn");
+        EquipMenu.instance.ChangeMenu(this);
     }
 }

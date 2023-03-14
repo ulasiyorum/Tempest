@@ -9,6 +9,16 @@ public class Player : MonoBehaviour
     private float drink;
     private float sleep;
     private float carrying;
+    public float Carrying { get => carrying; }
 
-    private List<Collectables> inventory;
+    public const int MaxCarry = 40;
+
+    private List<Collectables> inventory = new List<Collectables>();
+
+    public void Collect(Collectables item)
+    {
+        carrying += item.itemWeight;
+        inventory.Add(item);
+    }
+
 }

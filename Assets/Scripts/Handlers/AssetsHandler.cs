@@ -5,8 +5,9 @@ using UnityEngine;
 public class AssetsHandler : MonoBehaviour
 {
     public static AssetsHandler i;
-
+    public GameObject[] colPrefabs;
     public GameObject[] mapPrefabs;
+    public GameObject popUpPrefab;
 
     private void Awake()
     {

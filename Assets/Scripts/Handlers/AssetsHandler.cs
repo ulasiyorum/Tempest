@@ -8,6 +8,7 @@ public class AssetsHandler : MonoBehaviour
     public GameObject[] colPrefabs;
     public GameObject[] mapPrefabs;
     public GameObject popUpPrefab;
+    public GameObject inventoryItemPrefab;
 
     private void Awake()
     {

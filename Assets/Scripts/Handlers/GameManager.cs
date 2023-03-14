@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager i;
     public Player player;
     public Canvas canvas;
+    public Canvas UICanvas;
     public Map current;
 
     public void ChangeCurrentMap(Map newMap)

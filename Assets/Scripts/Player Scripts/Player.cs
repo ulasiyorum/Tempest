@@ -15,10 +15,11 @@ public class Player : MonoBehaviour
 
     private List<Collectables> inventory = new List<Collectables>();
 
+    public System.Collections.ObjectModel.ReadOnlyCollection<Collectables> Inventory { get => inventory.AsReadOnly(); }
+
     public void Collect(Collectables item)
     {
         carrying += item.itemWeight;
         inventory.Add(item);
     }
-
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,5 +10,5 @@ public class Player : MonoBehaviour
     private float sleep;
     private float carrying;
 
-    // List<Collectables> Inventory
+    private List<Collectables> inventory;
 }

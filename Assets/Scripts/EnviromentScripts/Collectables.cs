@@ -13,6 +13,8 @@ public class Collectables : MonoBehaviour
         Medical,
         Other
     }
+    [SerializeField] GameObject equipMenu;
+
     public string itemName;
     public Type type;
     public float condition = 100;
@@ -31,9 +33,24 @@ public class Collectables : MonoBehaviour
 
     public float sicknessChance = 0;
 
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
-        if(condition > 0)
+        if (condition > 0)
             condition -= Time.deltaTime / 1000;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        equipMenu.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        equipMenu.SetActive(true);
     }
 }

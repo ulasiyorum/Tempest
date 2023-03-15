@@ -15,6 +15,6 @@ public class InventoryItem : MonoBehaviour
         GameObject go = Instantiate(AssetsHandler.i.FindPrefab(collectable.itemName),GameManager.i.canvas.transform,true);
         go.transform.position = GameManager.i.player.transform.position;
         GameManager.i.player.Drop(collectable);
-        Destroy(transform.parent.transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

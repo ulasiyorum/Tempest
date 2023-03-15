@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   alreadyCreated: 0
+  map: {fileID: 3479621376299399772}
 --- !u!61 &1420424028832775991
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   alreadyCreated: 0
+  map: {fileID: 3479621376299399772}
 --- !u!61 &3293995114455825205
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -193,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   alreadyCreated: 0
+  map: {fileID: 3479621376299399772}
 --- !u!61 &4932886802046295618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8356,6 +8359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   alreadyCreated: 0
+  map: {fileID: 3479621376299399772}
 --- !u!61 &4249252289890464677
 BoxCollider2D:
   m_ObjectHideFlags: 0

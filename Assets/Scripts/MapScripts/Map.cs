@@ -38,6 +38,10 @@ public class Map : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.tag);
+        if (collision.tag != "PlayerObject")
+            return;
+
         GameManager.i.ChangeCurrentMap(this);
     }
 

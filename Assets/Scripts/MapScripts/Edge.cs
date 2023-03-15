@@ -15,6 +15,8 @@ public class Edge : MonoBehaviour
 
     public Type type;
     public bool alreadyCreated;
+    public Transform map;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +36,9 @@ public class Edge : MonoBehaviour
 
         if (alreadyCreated)
             return;
+
         alreadyCreated = true;
-        GameManager.i.CreateMap(type);
+        GameManager.i.CreateMap(type,map.position);
 
     }
 }

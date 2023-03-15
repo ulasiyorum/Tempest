@@ -13,13 +13,22 @@ public class Player : MonoBehaviour
 
     public const int MaxCarry = 40;
 
-    private List<Collectables> inventory = new List<Collectables>();
+    private List<Collectables> inventory;
 
-    public System.Collections.ObjectModel.ReadOnlyCollection<Collectables> Inventory { get => inventory.AsReadOnly(); }
+    private void Start()
+    {
+        inventory = new List<Collectables>();
+    }
+    public List<Collectables> Inventory { get => inventory; }
 
     public void Collect(Collectables item)
     {
         carrying += item.itemWeight;
         inventory.Add(item);
+    }
+
+    public void Drop(Collectables collectable)
+    {
+        inventory.Remove(collectable);
     }
 }

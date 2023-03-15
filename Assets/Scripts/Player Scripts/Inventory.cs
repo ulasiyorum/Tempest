@@ -10,23 +10,26 @@ public class Inventory : MonoBehaviour
     private List<GameObject> generated;
     private void Start()
     {
-        GetInventory();
+
     }
 
     public void GetInventory()
     {
+        generated = new List<GameObject>();
         Player player = GameManager.i.player;
-        Collectables[] col = player.Inventory.ToArray();
+        List<Collectables> col = player.Inventory;
         GameObject itemPrefab = AssetsHandler.i.inventoryItemPrefab;
         foreach (Collectables collectable in col)
         {
             GameObject go = Instantiate(itemPrefab,parent);
             InventoryItem item = go.GetComponent<InventoryItem>();
-            item._name.text = collectable.name;
+            item._name.text = collectable.itemName;
             item._icon.sprite = collectable.icon;
+            item.collectable = collectable;
             generated.Add(go);
         }
     }
+
 
     public void CloseInventory()
     {
@@ -34,6 +37,5 @@ public class Inventory : MonoBehaviour
         {
             Destroy(go);
         }
-        generated.Clear();
     }
 }

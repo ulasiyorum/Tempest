@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public Canvas UICanvas;
     public Map current;
 
+    public List<Vector2> positions;
+
     public void ChangeCurrentMap(Map newMap)
     {
         current = newMap;
@@ -23,35 +25,50 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CreateMap(Edge.Type.Start);
+        CreateMap(Edge.Type.Start, Vector2.zero);
         Vector2 bounds = current.GetComponent<BoxCollider2D>().bounds.size;
         Map.ySize = bounds.y;
         Map.xSize = bounds.x;
     }
 
-    public void CreateMap(Edge.Type type)
+    public void CreateMap(Edge.Type type, Vector2 position)
     {
         GameObject[] prefabs = AssetsHandler.i.mapPrefabs;
         int random = UnityEngine.Random.Range(0,prefabs.Length);
-        CreateNewMap(prefabs[random], type);
+        CreateNewMap(prefabs[random], type, position);
     }
 
-    private void CreateNewMap(GameObject prefab, Edge.Type type)
+    private bool MapExists(Vector2 position)
     {
-        Vector2 currentPos = Vector2.zero;
+        foreach(Vector2 pos in positions)
+        {
+            if(Vector2.Distance(pos,position) < 15f)
+            {
+                Debug.Log(Vector2.Distance(pos, position));
+                return true;
+            }
+        }
+        return false;
+    }
 
-        if (type != Edge.Type.Start)
-            currentPos = current.transform.position;
-
+    private void CreateNewMap(GameObject prefab, Edge.Type type,Vector2 position)
+    {
         Vector2 newPos = type switch
         {
             Edge.Type.Start => Vector3.zero,
-            Edge.Type.Left => new Vector3(currentPos.x - Map.xSize, currentPos.y),
-            Edge.Type.Right => new Vector3(currentPos.x + Map.xSize, currentPos.y),
-            Edge.Type.Bottom => new Vector3(currentPos.x, currentPos.y - Map.ySize),
-            Edge.Type.Top => new Vector3(currentPos.x, currentPos.y + Map.ySize),
+            Edge.Type.Left => new Vector3(position.x - Map.xSize, position.y),
+            Edge.Type.Right => new Vector3(position.x + Map.xSize, position.y),
+            Edge.Type.Bottom => new Vector3(position.x, position.y - Map.ySize),
+            Edge.Type.Top => new Vector3(position.x, position.y + Map.ySize),
             _ => Vector3.zero
         };
+        
+        if (MapExists(newPos))
+            return;
+
+        positions.Add(newPos);
+
+        
         GameObject go = Instantiate(prefab, canvas.transform, true);
         go.GetComponent<Map>().CancelEdge(type);
 

@@ -25,4 +25,18 @@ public class AssetsHandler : MonoBehaviour
     {
         
     }
+
+    public GameObject FindPrefab(string name)
+    {
+
+        foreach(var prefab in colPrefabs)
+        {
+            if(prefab.GetComponent<Collectables>().itemName == name)
+            {
+                return prefab;
+            }
+        }
+
+        return null;
+    }
 }

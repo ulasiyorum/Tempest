@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +13,9 @@ public class Player : MonoBehaviour
     private float carrying;
     public float Carrying { get => carrying; }
 
+    private bool buttonClicked; // This is so we can await a response from user when starting a fire
+    private bool fire; // This is so we can know what response they gave us when asking them to start the fire
+
     public const int MaxCarry = 40;
 
     private List<Collectables> inventory;
@@ -20,9 +25,12 @@ public class Player : MonoBehaviour
     [SerializeField] Image warmthBar;
     [SerializeField] Image hungerBar;
     [SerializeField] Image thirstBar;
+    [SerializeField] GameObject startFire, confirm, cancel;
+
 
     private void Start()
     {
+        buttonClicked = false;
         health = 100;
         cold = 100;
         eat = 3000;
@@ -48,19 +56,62 @@ public class Player : MonoBehaviour
         switch(item.type)
         {
             case Collectables.Type.Burn:
+                StartAFire(item);
                 break;
             case Collectables.Type.Cloth:
+                Debug.Log("Implement wearing cloth");
                 break;
             case Collectables.Type.Food:
             case Collectables.Type.Drink:
             case Collectables.Type.Medical:
-                
+                used = Consume(item);
                 break;
             case Collectables.Type.Other:
+                Debug.Log("Implement other");
+                break;
+            default:
+                Debug.Log("Implement default");
                 break;
         }
 
         return used;
+    }
+
+    private bool StartAFire(Collectables item)
+    {
+        bool used = false;
+        startFire.SetActive(true);
+        startFire.transform.position = transform.position + new Vector3(3f,0f);
+        StartCoroutine(WaitUI((bool result) => {
+            used = result;
+        }));
+        buttonClicked = false;
+
+        if(fire)
+        {
+            GameObject go = Instantiate(AssetsHandler.i.firePrefab, GameManager.i.canvas.transform, true);
+            go.transform.position = startFire.transform.position;
+            Enviroment.firePosition = go.transform.position;
+        }
+
+        startFire.SetActive(false);
+
+        return used;
+    }
+
+    public void Choose(bool start)
+    {
+        fire = start;
+        buttonClicked = true;
+        confirm.SetActive(false);
+        cancel.SetActive(false);
+    }
+
+    private IEnumerator WaitUI(Action<bool> result)
+    {
+        yield return new WaitUntil(() => buttonClicked);
+
+        result.Invoke(fire);
     }
 
     private bool Consume(Collectables item)

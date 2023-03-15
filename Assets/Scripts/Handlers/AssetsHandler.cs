@@ -9,7 +9,7 @@ public class AssetsHandler : MonoBehaviour
     public GameObject[] mapPrefabs;
     public GameObject popUpPrefab;
     public GameObject inventoryItemPrefab;
-
+    public GameObject firePrefab;
     private void Awake()
     {
         i = this;

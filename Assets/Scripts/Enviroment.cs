@@ -10,6 +10,8 @@ public class Enviroment : MonoBehaviour
     public static bool windStorm;
     public static float fireDegree;
     public static Vector2 firePosition;
+    public static float fireDuration;
+
 
     [SerializeField] TMP_Text degreeText;
     public static float Degree
@@ -35,6 +37,7 @@ public class Enviroment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fireDuration = 0;
         firePosition = Vector2.zero;
         fireDegree = 0;
         weatherTimer = 0;
@@ -60,6 +63,17 @@ public class Enviroment : MonoBehaviour
                     windStorm = true;
             }
             weatherTimer = 0;
+        }
+
+        if(fireDuration > 0)
+        {
+            fireDuration -= Time.deltaTime;
+        }
+        else if(fireDegree > 0)
+        {
+            fireDegree = 0;
+            fireDuration = 0;
+            firePosition = Vector2.zero;
         }
 
         degreeText.text = Degree + " DEGREES";

@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] Image warmthBar;
     [SerializeField] Image hungerBar;
     [SerializeField] Image thirstBar;
-    [SerializeField] GameObject startFire, confirm, cancel;
+    [SerializeField] GameObject startFire;
 
 
     private void Start()
@@ -92,6 +92,8 @@ public class Player : MonoBehaviour
             GameObject go = Instantiate(AssetsHandler.i.firePrefab, GameManager.i.canvas.transform, true);
             go.transform.position = startFire.transform.position;
             Enviroment.firePosition = go.transform.position;
+            Enviroment.fireDegree = item.burnDegree;
+            Enviroment.fireDuration = item.burnDuration;
         }
 
         startFire.SetActive(false);
@@ -103,8 +105,6 @@ public class Player : MonoBehaviour
     {
         fire = start;
         buttonClicked = true;
-        confirm.SetActive(false);
-        cancel.SetActive(false);
     }
 
     private IEnumerator WaitUI(Action<bool> result)

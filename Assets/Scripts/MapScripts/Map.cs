@@ -21,7 +21,7 @@ public class Map : MonoBehaviour
 
     private void SpawnCollectables()
     {
-        int amount = Random.Range(0,3);
+        int amount = Random.Range(0,6);
         GameObject[] prefabs = AssetsHandler.i.colPrefabs;
         for (int i = 0; i < amount; i++)
         {

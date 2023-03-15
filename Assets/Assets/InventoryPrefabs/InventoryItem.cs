@@ -17,4 +17,11 @@ public class InventoryItem : MonoBehaviour
         GameManager.i.player.Drop(collectable);
         Destroy(gameObject);
     }
+
+    public void UseItem()
+    {
+        bool used = GameManager.i.player.UseItem(collectable);
+        if (used)
+            Destroy(gameObject);
+    }
 }

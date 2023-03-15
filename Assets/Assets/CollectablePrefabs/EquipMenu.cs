@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EquipMenu : MonoBehaviour
 {
-    private static Collectables current;
+    public static Collectables current;
     public static EquipMenu instance;
     [SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text conditionText;
@@ -36,6 +37,9 @@ public class EquipMenu : MonoBehaviour
     }
     public void Collect()
     {
+        if (current == null)
+            return;
+
         if(player.Carrying > Player.MaxCarry)
         {
             StartPopUpMessage.Message("You can't carry much more", Color.red);
@@ -43,12 +47,8 @@ public class EquipMenu : MonoBehaviour
         {
             player.Collect(current);
             Destroy(current.gameObject);
+            current = null;
         }
-    }
-
-    private void Awake()
-    {
-
     }
     void Start()
     {

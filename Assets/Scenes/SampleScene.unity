@@ -1220,14 +1220,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 15
+    m_Left: -15
     m_Right: 0
-    m_Top: 15
+    m_Top: -15
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 500, y: 180}
+  m_CellSize: {x: 525, y: 180}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
@@ -1548,6 +1548,12 @@ MonoBehaviour:
   colPrefabs:
   - {fileID: 2679594013337665052, guid: 6f085505903f32e47b0da0fef524fcf9, type: 3}
   - {fileID: 2679594013337665052, guid: cddff45055beac444be18b8bcd66bc71, type: 3}
+  - {fileID: 2679594013337665052, guid: 8b43425339c0b3b42af725a8c3d2cf28, type: 3}
+  - {fileID: 2679594013337665052, guid: 5b74607df33ba3b40b41bfffc7be89ac, type: 3}
+  - {fileID: 2679594013337665052, guid: 438017d25efc4484b97c4e18c3632a6f, type: 3}
+  - {fileID: 2679594013337665052, guid: 85238885c9bb77046a0dfe818a2a6869, type: 3}
+  - {fileID: 2679594013337665052, guid: c0ecb3cbe589151448296e8c67e9d8b2, type: 3}
+  - {fileID: 2679594013337665052, guid: 8ed102d502f31f74eb2bef4e48fdd314, type: 3}
   mapPrefabs:
   - {fileID: 3479621376299399773, guid: 4dfcad86a4a5c7d4bbbe4db80f99fdc1, type: 3}
   popUpPrefab: {fileID: 8792698768173771851, guid: 56f8f69e93e5e214bab91c55ab6d333d, type: 3}

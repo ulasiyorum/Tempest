@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 500, y: 180}
   m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
+  m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!1 &1022391132
 GameObject:
@@ -1601,6 +1601,7 @@ MonoBehaviour:
   canvas: {fileID: 760490270}
   UICanvas: {fileID: 1883729767}
   current: {fileID: 0}
+  positions: []
 --- !u!114 &1169707252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2736,7 +2737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 908901620}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1

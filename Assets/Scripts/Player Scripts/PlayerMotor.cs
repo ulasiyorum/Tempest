@@ -16,6 +16,7 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
+        if(!Player.consuming)
         HandleMovement();
     }
 

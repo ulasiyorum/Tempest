@@ -23,6 +23,8 @@ public class InventoryItem : MonoBehaviour
         bool used = GameManager.i.player.UseItem(collectable);
         if (used)
             Destroy(gameObject);
+
+        transform.parent.parent.parent.parent.gameObject.SetActive(false);
     }
 
     public void UseFire()
@@ -30,5 +32,6 @@ public class InventoryItem : MonoBehaviour
         Enviroment.fireDegree += collectable.burnDegree;
         Enviroment.fireDuration += collectable.burnDuration;
         GameManager.i.player.Drop(collectable);
+        Destroy(gameObject);
     }
 }

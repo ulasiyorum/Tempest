@@ -76,7 +76,7 @@ public class Enviroment : MonoBehaviour
             firePosition = Vector2.zero;
         }
 
-        degreeText.text = Degree + " DEGREES";
+        degreeText.text = (int)Degree + " DEGREES";
 
     }
 }

@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] Transform parent;
     [SerializeField] Transform fireParent;
-    private List<GameObject> generated;
+    private List<GameObject> generated = new List<GameObject>();
     private void Start()
     {
 
@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
 
     public void GetInventory()
     {
+        CloseInventory();
         generated = new List<GameObject>();
         Player player = GameManager.i.player;
         List<Collectables> col = player.Inventory;
@@ -32,6 +33,7 @@ public class Inventory : MonoBehaviour
     
     public void GetInventoryBurnables()
     {
+        CloseInventory();
         generated = new List<GameObject>();
         Player player = GameManager.i.player;
         List<Collectables> col = player.Inventory;

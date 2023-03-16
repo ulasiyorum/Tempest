@@ -13,13 +13,16 @@ public class Player : MonoBehaviour
     private float carrying;
     public float Carrying { get => carrying; }
 
-    private bool buttonClicked; // This is so we can await a response from user when starting a fire
-    private bool fire; // This is so we can know what response they gave us when asking them to start the fire
-
     public const int MaxCarry = 40;
 
     private List<Collectables> inventory;
 
+    public static bool consuming = false;
+    private float drinkConsume = 0;
+    private float eatConsume = 0;
+
+
+    private Collectables temporaryFireCol;
 
     [SerializeField] Image healthBar;
     [SerializeField] Image warmthBar;
@@ -30,11 +33,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        buttonClicked = false;
         health = 100;
         cold = 100;
         eat = 3000;
-        drink = 3000;
+        drink = 1500;
         inventory = new List<Collectables>();
     }
     public List<Collectables> Inventory { get => inventory; }
@@ -84,55 +86,35 @@ public class Player : MonoBehaviour
 
     private bool StartAFire(Collectables item)
     {
-        bool used = false;
         startFire.SetActive(true);
         startFire.transform.position = transform.position + new Vector3(3f,0f);
-        StartCoroutine(WaitUI((bool result) => {
-            used = result;
-        }));
-        buttonClicked = false;
-
-        if(fire)
-        {
-            GameObject go = Instantiate(AssetsHandler.i.firePrefab, GameManager.i.canvas.transform, true);
-            go.transform.position = startFire.transform.position;
-            Enviroment.firePosition = go.transform.position;
-            Enviroment.fireDegree = item.burnDegree;
-            Enviroment.fireDuration = item.burnDuration;
-        }
-
-        startFire.SetActive(false);
-
-        return used;
+        temporaryFireCol = item;
+        return false;
     }
 
     public void Choose(bool start)
     {
-        fire = start;
-        buttonClicked = true;
+        if(start)
+        {
+            GameObject go = Instantiate(AssetsHandler.i.firePrefab, GameManager.i.canvas.transform, false);
+            go.transform.position = startFire.transform.position;
+            Enviroment.firePosition = go.transform.position;
+            Enviroment.fireDegree = temporaryFireCol.burnDegree;
+            Enviroment.fireDuration = temporaryFireCol.burnDuration;
+
+            inventory.Remove(temporaryFireCol);
+        }
     }
 
-    private IEnumerator WaitUI(Action<bool> result)
-    {
-        yield return new WaitUntil(() => buttonClicked);
-
-        result.Invoke(fire);
-    }
 
     private bool Consume(Collectables item)
     {
-        if(eat + item.calories > 3000 || drink + item.liquid > 3000)
-        {
-            StartPopUpMessage.Message("You're way too full to consume this item!",Color.yellow);
-            return false;
-        }
-        else 
-        {
-            // SOON => CHECK DISEASES
-            drink += item.liquid;
-            eat += item.calories;
-            return true;
-        }
+        consuming = true;
+        //Play anim & sound
+        eatConsume += item.calories;
+        drinkConsume += item.liquid;
+
+        return true;
     }
 
 
@@ -150,20 +132,20 @@ public class Player : MonoBehaviour
 
         if(eat > 0)
         {
-            eat -= Time.deltaTime * 4;
+            eat -= Time.deltaTime * 10;
         } else
         {
             eat = 0;
-            health -= Time.deltaTime * 4;
+            health -= Time.deltaTime * 10;
         }
 
         if(drink > 0)
         {
-            drink -= Time.deltaTime * 4;
+            drink -= Time.deltaTime * 8;
         } else
         {
             drink = 0;
-            health -= Time.deltaTime * 4;
+            health -= Time.deltaTime * 8;
         }
 
         Check();
@@ -171,13 +153,13 @@ public class Player : MonoBehaviour
         healthBar.fillAmount = health / 100;
         warmthBar.fillAmount = cold / 100;
         hungerBar.fillAmount = eat / 3000;
-        thirstBar.fillAmount = drink / 3000;
+        thirstBar.fillAmount = drink / 1500;
     }
 
     private void Check()
     {
-        if (drink > 3000)
-            drink = 3000;
+        if (drink > 1500)
+            drink = 1500;
         if (cold > 100)
             cold = 100;
         if (health > 100)
@@ -189,5 +171,52 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateStatus();
+
+        if(consuming)
+        {
+            if(drinkConsume > 0 && drink <= 1500)
+            {
+                if (drinkConsume >= Time.deltaTime * 200)
+                {
+                    drink += Time.deltaTime * 200;
+                    drinkConsume -= Time.deltaTime * 200;
+                } else
+                {
+                    drink += drinkConsume;
+                    drinkConsume -= drinkConsume;
+                }
+            }
+            else if(drinkConsume < 0 && drink > 0)
+            {
+                if (drinkConsume <= Time.deltaTime * 200)
+                {
+                    drink -= Time.deltaTime * 200;
+                    drinkConsume += Time.deltaTime * 200;
+                } else
+                {
+                    drink -= drinkConsume;
+                    drinkConsume += drinkConsume;
+                }
+            }
+            if(eatConsume > 0 && eat <= 3000)
+            {
+                if (eatConsume >= Time.deltaTime * 200)
+                {
+                    eat += Time.deltaTime * 200;
+                    eatConsume -= Time.deltaTime * 200;
+                } else
+                {
+                    eat += eatConsume;
+                    eatConsume -= eatConsume;
+                }
+            }
+
+            if ((eatConsume == 0 && drinkConsume == 0) || (eat == 3000 && drink == 1500))
+            {
+                eatConsume = 0;
+                drinkConsume = 0;
+                consuming = false;
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,9 @@ public class FireOnClick : MonoBehaviour, IPointerDownHandler
 {
     private Inventory inventoryReference;
     private GameObject fireManager;
+
+    [SerializeField] TMP_Text degreeText;
+    [SerializeField] TMP_Text secondsText;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -24,6 +28,12 @@ public class FireOnClick : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        
+
+        secondsText.text = (int)Enviroment.fireDuration + " seconds left";
+        degreeText.text = Enviroment.fireDegree + " degrees";
+
+        if (Enviroment.fireDuration <= 0)
+            Destroy(gameObject);
+
     }
 }

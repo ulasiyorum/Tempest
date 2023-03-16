@@ -74,6 +74,11 @@ public class Player : MonoBehaviour
                 break;
         }
 
+        if(used)
+        {
+            inventory.Remove(item);
+        }
+
         return used;
     }
 

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public Canvas UICanvas;
     public Map current;
 
+    public GameObject fireManager;
+    public Inventory Inventory;
+
     public List<Vector2> positions;
 
     public void ChangeCurrentMap(Map newMap)

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] GameObject item;
     [SerializeField] Transform parent;
+    [SerializeField] Transform fireParent;
     private List<GameObject> generated;
     private void Start()
     {
@@ -29,7 +29,26 @@ public class Inventory : MonoBehaviour
             generated.Add(go);
         }
     }
-
+    
+    public void GetInventoryBurnables()
+    {
+        generated = new List<GameObject>();
+        Player player = GameManager.i.player;
+        List<Collectables> col = player.Inventory;
+        GameObject itemPrefab = AssetsHandler.i.inventoryItemForFirePrefab;
+        foreach (Collectables collectable in col)
+        {
+            if (collectable.type == Collectables.Type.Burn)
+            {
+                GameObject go = Instantiate(itemPrefab, fireParent);
+                InventoryItem item = go.GetComponent<InventoryItem>();
+                item._name.text = collectable.itemName;
+                item._icon.sprite = collectable.icon;
+                item.collectable = collectable;
+                generated.Add(go);
+            }
+        }
+    }
 
     public void CloseInventory()
     {

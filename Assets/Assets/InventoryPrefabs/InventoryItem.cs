@@ -24,4 +24,11 @@ public class InventoryItem : MonoBehaviour
         if (used)
             Destroy(gameObject);
     }
+
+    public void UseFire()
+    {
+        Enviroment.fireDegree += collectable.burnDegree;
+        Enviroment.fireDuration += collectable.burnDuration;
+        GameManager.i.player.Drop(collectable);
+    }
 }

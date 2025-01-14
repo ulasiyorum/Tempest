@@ -17,7 +17,7 @@ public class PlayerMotor : MonoBehaviour
     void Update()
     {
         if(!Player.consuming)
-        HandleMovement();
+            HandleMovement();
     }
 
     public void HandleMovement()
@@ -25,8 +25,8 @@ public class PlayerMotor : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        float horizontal = transform.position.x + h * Time.deltaTime * 2.5f;
-        float vertical = transform.position.y + v * Time.deltaTime * 2.5f;
+        float horizontal = transform.position.x + h * Time.deltaTime * 3.2f;
+        float vertical = transform.position.y + v * Time.deltaTime * 3.2f;
 
         switch (h,v)
         {

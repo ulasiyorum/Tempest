@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Collectables : MonoBehaviour
 {
-
     public Sprite icon;
 
     public enum Type

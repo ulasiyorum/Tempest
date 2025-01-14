@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] Image hungerBar;
     [SerializeField] Image thirstBar;
     [SerializeField] GameObject startFire;
-
+    [SerializeField] GameObject gameOverMenu;
 
     private void Start()
     {
@@ -121,39 +121,50 @@ public class Player : MonoBehaviour
     public void UpdateStatus()
     {
         if(cold > 0 || Enviroment.Degree > 0)
-        {
-            cold += Enviroment.Degree * Time.deltaTime / 15;
+        {   
+            cold += Enviroment.Degree * Time.deltaTime / 16;
         }
         else
         {
             cold = 0;
-            health -= -1 * Enviroment.degree * Time.deltaTime / 25;
+            health -= -1 * Enviroment.degree * Time.deltaTime / 20;
         }
 
         if(eat > 0)
         {
-            eat -= Time.deltaTime * 10;
+            eat -= Time.deltaTime * 12;
         } else
         {
             eat = 0;
-            health -= Time.deltaTime * 10;
+            health -= Time.deltaTime;
         }
 
         if(drink > 0)
         {
-            drink -= Time.deltaTime * 8;
+            drink -= Time.deltaTime * 10;
         } else
         {
             drink = 0;
-            health -= Time.deltaTime * 8;
+            health -= Time.deltaTime;
         }
 
+        if (drink > 0 && eat > 0 && cold > 0 && health < 100)
+        {
+            health += Time.deltaTime / 3;
+        }
+        
         Check();
 
         healthBar.fillAmount = health / 100;
         warmthBar.fillAmount = cold / 100;
         hungerBar.fillAmount = eat / 3000;
         thirstBar.fillAmount = drink / 1500;
+        
+        if(health <= 0)
+        {
+            gameOverMenu.SetActive(true);
+            this.enabled = false;
+        }
     }
 
     private void Check()
